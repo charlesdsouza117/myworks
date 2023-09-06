@@ -7,23 +7,32 @@ public class FindPrimes {
 
     public Long[] findPrimes(long N) {
         System.out.println("N: " + N);
-        long g = guess(N);
-        System.out.println("Guess: " + g);
+        long g = 0;
         int r = 1;
+        boolean hadToBreak = false;
         BigInteger bigN = BigInteger.valueOf(N);
-        BigInteger bigG = BigInteger.valueOf(g);
-        BigInteger pow = BigInteger.valueOf(g);
-        pow = pow.pow(r);
-        BigInteger mod = pow.mod(bigN);
-        while (mod.intValue() != 1) {
-            System.out.println(g + "^" + r + "=" + pow);
-            System.out.println("mod: " + mod);
-            r++;
-            pow = bigG;
-            pow = pow.pow(r);
-            mod = pow.mod(bigN);
-            System.out.println("mod: " + mod);
-        }
+        BigInteger bigG;
+        do {
+            g = 56;//guess(N);
+            bigG = BigInteger.valueOf(g);
+            System.out.println("Guess: " + g);
+            BigInteger pow = bigG.pow(r);
+            BigInteger mod = pow.mod(bigN);
+            while (mod.intValue() != 1) {
+                System.out.println(g + "^" + r + "=" + pow);
+                System.out.println("mod: " + mod);
+                r++;
+                pow = bigG;
+                pow = pow.pow(r);
+                mod = pow.mod(bigN);
+                System.out.println("mod: " + mod);
+                if (r > 10) {
+                    hadToBreak = true;
+                    r = 1;
+                    break;
+                }
+            }
+        } while (hadToBreak);
         System.out.println("r: " + r);
         long fpow = r / 2;
         System.out.println("fpow: " + fpow);
@@ -33,10 +42,10 @@ public class FindPrimes {
 
         //long B = Double.valueOf(Math.pow(g, fpow) - 1).longValue();
 
-        BigInteger factor1 = gcd(bigA,bigN);
+        BigInteger factor1 = gcd(bigA, bigN);
         BigInteger factor2 = bigN.divide(factor1);
 
-        System.out.println("Guess: "+g);
+        System.out.println("Guess: " + g);
 
         return new Long[]{factor1.longValue(), factor2.longValue()};
     }
