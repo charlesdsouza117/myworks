@@ -24,4 +24,4 @@ while(A%N !=0) {
 
 when R == 0, one of the factor is N.
 
-Now find the other factor using B.
+Now find the other factor using B, or simply N / factor1.
